@@ -43,8 +43,9 @@ def post(url, body, headers):
 
 def azure(text, voice):
     key, region = os.environ["AZURE_SPEECH_KEY"], os.environ.get("AZURE_SPEECH_REGION", "westeurope")
+    body = '<break time="900ms"/>'.join(escape(par) for par in text.split("\n\n"))
     ssml = (f'<speak version="1.0" xml:lang="en-GB" xmlns="http://www.w3.org/2001/10/synthesis">'
-            f'<voice name="{voice}"><prosody rate="-5%">{escape(text)}</prosody></voice></speak>')
+            f'<voice name="{voice}"><prosody rate="-5%">{body}</prosody></voice></speak>')
     return post(f"https://{region}.tts.speech.microsoft.com/cognitiveservices/v1", ssml.encode(), {
         "Ocp-Apim-Subscription-Key": key,
         "Content-Type": "application/ssml+xml",
@@ -68,11 +69,22 @@ def main():
     ap.add_argument("--voice", help="Force one voice (default: random mix per place)")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--only")
+    ap.add_argument("--story", action="store_true", help="Voice data/story.json chapters instead of places")
     a = ap.parse_args()
     load_env()
     need = "AZURE_SPEECH_KEY" if a.provider == "azure" else "SPEECHIFY_API_KEY"
     if not os.environ.get(need):
         sys.exit(f"{need} not set (add it to .env or export it)")
+    tts = azure if a.provider == "azure" else speechify
+    if a.story:
+        for c in json.loads((ROOT / "data" / "story.json").read_text())["chapters"]:
+            f = OUT / f"{c['id']}.mp3"
+            if (a.only and c["id"] != a.only) or (f.exists() and not a.force):
+                continue
+            text = f"{c['title']}. {c['years'].replace('–', ' to ')}.\n\n{c['text']}"
+            f.write_bytes(tts(text, a.voice or c["voice"]))
+            print(f"done  {f.name}  ({len(text)} chars)")
+        return
     places = json.loads(DATA.read_text())["places"]
     genders = (["male", "female"] * len(places))[:len(places)]
     random.Random(1945).shuffle(genders)
