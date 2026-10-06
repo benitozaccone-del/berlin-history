@@ -95,6 +95,11 @@ main{padding:0 0 calc(110px + env(safe-area-inset-bottom))}
 .chap .y{font-size:13px;color:var(--mute)}
 .chap .pl{margin-left:auto;flex:none;width:40px;height:40px;background:var(--accent);color:#fff;display:grid;place-items:center}
 .chap.playing h3{color:var(--accent)}
+.sec{display:flex;align-items:baseline;justify-content:space-between;padding:22px 16px 0}
+.sec h2{margin:0;font-size:24px;font-weight:500}
+.lnk{border:0;background:none;color:var(--ink);font:700 14px "Libre Franklin",sans-serif;text-decoration:underline;text-underline-offset:3px;padding:0}
+#homeStory{padding-top:0;padding-bottom:0}
+#story{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
 .story-actions{padding:0 16px 8px}
 /* larger screens: centred 720px column; header, band and player keep full-width backgrounds */
 :root{--gut:max(16px, calc((100vw - 720px) / 2))}
@@ -117,6 +122,9 @@ header,.band{padding-left:var(--gut);padding-right:var(--gut)}
 <main id="main">
   <div class="hero"><img src="img/brandenburg-gate.jpg" alt=""><div class="labels"><h1>Berlin 1914–1989</h1><p>A walking audioguide</p></div></div>
   <p class="intro">From the Kaiser's war to the fall of the Wall: <a href="#" id="introMap">32 places</a> where the twentieth century happened, each with a <strong>two-minute audio story</strong>.</p>
+  <div class="sec"><h2>The story before you go</h2><button class="lnk" id="toStory">All chapters →</button></div>
+  <div class="list" id="homeStory"></div>
+  <div class="sec"><h2>Places</h2></div>
   <div class="list" id="list"></div>
 </main>
 <section id="story" hidden></section>
@@ -217,6 +225,16 @@ $('#introMap').onclick = e => { e.preventDefault(); showView('map'); };
 // --- story: chapters played in sequence ---
 let STORY;
 const chapterItem = (c, i) => ({ id: c.id, name: `${i+1}. ${c.title}`, img: c.image, text: c.text, next: i + 1 });
+const chapterRows = () => STORY.chapters.map((c,i) => `
+      <button class="chap${current?.id===c.id?' playing':''}" data-i="${i}">
+        <img src="img/${c.image}.jpg" alt="" loading="lazy">
+        <div><div class="no">Chapter ${i+1}</div><h3>${esc(c.title)}</h3><div class="y">${c.years}</div></div>
+        <span class="pl" data-play="${i}">${PLAY}</span>
+      </button>`).join('');
+async function renderHomeStory() {
+  STORY = STORY || await (await fetch('data/story.json')).json();
+  $('#homeStory').innerHTML = chapterRows();
+}
 async function renderStory() {
   STORY = STORY || await (await fetch('data/story.json')).json();
   const ch = STORY.chapters;
@@ -224,15 +242,11 @@ async function renderStory() {
     <div class="hero"><img src="img/${ch[0].image}.jpg" alt=""><div class="labels"><h1>${esc(STORY.title)}</h1><p>${esc(STORY.subtitle)}</p></div></div>
     <p class="intro">Listen before you travel: <strong>${ch.length} chapters, about 25 minutes</strong>, from the Kaiser's empire to the fall of the Wall. They play one after another.</p>
     <div class="story-actions"><button class="btn primary" id="playAll" style="width:100%">${PLAY} Play the whole story</button></div>
-    <div class="list">${ch.map((c,i) => `
-      <button class="chap${current?.id===c.id?' playing':''}" data-i="${i}">
-        <img src="img/${c.image}.jpg" alt="" loading="lazy">
-        <div><div class="no">Chapter ${i+1}</div><h3>${esc(c.title)}</h3><div class="y">${c.years}</div></div>
-        <span class="pl" data-play="${i}">${PLAY}</span>
-      </button>`).join('')}</div>`;
+    <div class="list">${chapterRows()}</div>`;
   $('#playAll').onclick = () => play(chapterItem(ch[0], 0));
 }
-$('#story').onclick = e => {
+$('#toStory').onclick = () => showView('story');
+$('#story').onclick = $('#homeStory').onclick = e => {
   const pl = e.target.closest('[data-play]'), c = e.target.closest('.chap');
   if (pl) return play(chapterItem(STORY.chapters[pl.dataset.play], +pl.dataset.play));
   if (c) openChapter(+c.dataset.i);
@@ -302,7 +316,7 @@ function play(p) {
   speechSynthesis?.cancel(); current = p; useSpeech = false;
   $('#pn').textContent = p.name; $('#player').classList.add('show');
   audio.src = `audio/${p.id}.mp3`;
-  if (STORY && !$('#story').hidden) renderStory();
+  if (STORY) { renderHomeStory(); if (!$('#story').hidden) renderStory(); }
   audio.play().catch(() => {});
   audio.onerror = () => speak(p);
   if ('mediaSession' in navigator) navigator.mediaSession.metadata = new MediaMetadata({title:p.name, artist:'Berlin History Walks', artwork:[{src:`img/${p.img || p.id}.jpg`, sizes:'1000x750', type:'image/jpeg'}]});
@@ -330,7 +344,7 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.ser
 const setHH = () => document.documentElement.style.setProperty('--hh', $('header').offsetHeight + 'px');
 addEventListener('resize', setHH); setHH();
 setPP(false);
-init();
+init(); renderHomeStory();
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 // Offline cache: app shell up front, photos/audio/map tiles cached as they are used.
 // "Download all for offline" = open the app once on Wi-Fi; the shell precaches every place's photo and audio.
-const CACHE = 'berlin-v7';
+const CACHE = 'berlin-v8';
 
 self.addEventListener('install', e => e.waitUntil((async () => {
   const c = await caches.open(CACHE);
