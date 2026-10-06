@@ -10,71 +10,101 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Libre+Franklin:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--bg:#f6f3ee;--card:#fff;--ink:#1c1b19;--mute:#6b665e;--line:#e3ddd3;--accent:#9b2c2c}
-@media (prefers-color-scheme:dark){:root{--bg:#141311;--card:#1f1d1a;--ink:#eee9e1;--mute:#9d978c;--line:#34312c;--accent:#e06c6c}}
+:root{--bg:#fff;--band:#e0e0e0;--card:#fff;--ink:#363636;--mute:#6f6f6f;--line:#d6d6d6;--accent:#00706b;--label:rgba(255,255,255,.88)}
+@media (prefers-color-scheme:dark){:root{--bg:#161616;--band:#262626;--card:#1e1e1e;--ink:#ececec;--mute:#a3a3a3;--line:#3a3a3a;--accent:#3fb8af;--label:rgba(22,22,22,.85)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,system-ui,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
-header{position:sticky;top:0;z-index:500;background:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;border-bottom:1px solid var(--line)}
-h1{font-size:20px;margin:0 0 8px;letter-spacing:-.01em}
-.row{display:flex;gap:8px;align-items:center}
-.tabs{display:flex;background:var(--line);border-radius:10px;padding:3px;flex:1}
-.tabs button{flex:1;border:0;background:none;color:var(--ink);padding:7px;border-radius:8px;font:inherit;font-size:14px}
-.tabs button.on{background:var(--card);font-weight:600}
-.locate{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 10px;font:inherit;font-size:14px;white-space:nowrap}
-.locate.on{border-color:var(--accent);color:var(--accent)}
-.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Libre Franklin",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,.brand,.tabs button{font-family:Jost,"Futura",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:500;background:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 16px 0;box-shadow:0 1px 0 var(--line)}
+.top{display:flex;align-items:center;justify-content:space-between;height:40px}
+.brand{font-size:21px;font-weight:400;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand b{font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+.brand svg{width:22px;height:22px}
+.locate{border:0;background:none;color:var(--ink);font:600 11px "Libre Franklin",sans-serif;display:flex;flex-direction:column;align-items:center;gap:1px;padding:0 2px}
+.locate span{font-size:20px;line-height:1}
+.locate.on{color:var(--accent)}
+.tabs{display:flex;gap:22px;margin-top:4px}
+.tabs button{border:0;background:none;color:var(--mute);padding:8px 0 9px;font-size:16px;font-weight:500;border-bottom:3px solid transparent}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--ink)}
+.band{position:sticky;top:var(--hh,94px);z-index:499;background:var(--band);padding:10px 16px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;font:inherit;font-size:13px}
-.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-main{padding:12px 16px calc(110px + env(safe-area-inset-bottom))}
-.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;font:inherit}
-.card img{width:84px;height:84px;object-fit:cover;border-radius:10px;flex:none;background:var(--line)}
-.card h2{font-size:16px;margin:0 0 2px;line-height:1.25}
-.card p{margin:0;font-size:13px;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:11px;align-items:center}
-.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.dist{color:var(--accent);font-weight:600}
-.done{opacity:.55}
+.chip{flex:none;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:5px 12px;font:500 13px "Libre Franklin",sans-serif;display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:var(--ink);color:var(--bg)}
+.hero{position:relative;margin:0 0 4px}
+.hero img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--band)}
+.labels{position:absolute;left:16px;right:16px;bottom:18px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.labels>*{background:var(--label);color:var(--ink);padding:2px 8px;margin:0;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.labels h1,.labels h2{font-size:30px;font-weight:500;line-height:1.15}
+.labels p{font:400 17px Jost,sans-serif}
+.credit-ov{position:absolute;right:6px;bottom:4px;font-size:9px;background:rgba(0,0,0,.55);color:#fff;padding:1px 5px}
+main{padding:0 0 calc(110px + env(safe-area-inset-bottom))}
+.intro{padding:20px 16px 8px;font-size:16px}
+.intro a{color:var(--ink);font-weight:700}
+.list{padding:8px 16px}
+.card{display:block;width:100%;border:0;padding:0;margin:0 0 28px;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.card .ph{position:relative}
+.card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--band)}
+.card .labels{bottom:12px;left:12px;right:12px}
+.card .labels h2{font-size:22px}
+.card .labels .d{font:600 12px "Libre Franklin",sans-serif;background:var(--accent);color:#fff}
+.card .txt{padding:10px 0 0;font-size:15px}
+.card .txt p{margin:0 0 6px}
+.more{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mute);align-items:center}
+.meta span{display:inline-flex;align-items:center;gap:5px}
+.dot{width:9px;height:9px;display:inline-block}
+.done .ph img{filter:grayscale(1) opacity(.7)}
+.empty{color:var(--mute);text-align:center;padding:40px 0}
 #map{position:fixed;left:0;right:0;bottom:0;z-index:1}
 .sheet{position:fixed;inset:0;z-index:900;background:var(--bg);overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
 .sheet.open{transform:none}
-.sheet .hero{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--line)}
-.close{position:fixed;top:calc(env(safe-area-inset-top) + 10px);right:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px}
-.body{padding:16px 16px calc(130px + env(safe-area-inset-bottom))}
-.body h2{margin:0 0 4px;font-size:24px;line-height:1.2}
-.addr{color:var(--mute);font-size:14px;margin-bottom:12px}
-.actions{display:flex;gap:8px;margin:12px 0 18px;flex-wrap:wrap}
-.btn{flex:1;min-width:120px;text-align:center;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px;font:inherit;font-size:15px;font-weight:600;text-decoration:none}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.script{font-size:17px;line-height:1.65}
-.credit{font-size:11px;color:var(--mute);margin-top:20px;word-break:break-word}
+.close{position:fixed;top:calc(env(safe-area-inset-top) + 12px);left:12px;z-index:2;height:36px;padding:0 12px;border:0;background:var(--label);color:var(--ink);font:600 14px "Libre Franklin",sans-serif}
+.crumb{background:var(--band);padding:10px 16px;font-size:14px;color:var(--mute)}
+.body{padding:20px 16px calc(130px + env(safe-area-inset-bottom))}
+.addr{font-size:14px;margin-bottom:6px}
+.dist{color:var(--accent);font-weight:700}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0 22px}
+.btn{text-align:center;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px;font:600 15px "Libre Franklin",sans-serif;text-decoration:none}
+.btn.primary{grid-column:1/-1;background:var(--accent);border-color:var(--accent);color:#fff;font-size:16px}
+.lead{font-weight:700;font-size:17px;margin:0 0 14px}
+.script p{font-size:17px;line-height:1.7;margin:0 0 14px}
+.credit{font-size:11px;color:var(--mute);margin-top:24px;word-break:break-word}
 .credit a{color:inherit}
-.player{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:1000;background:var(--ink);color:var(--bg);border-radius:16px;padding:10px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.player{position:fixed;left:0;right:0;bottom:0;z-index:1000;background:#363636;color:#fff;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px}
 .player.show{display:flex}
-.player button{border:0;background:var(--bg);color:var(--ink);width:44px;height:44px;border-radius:50%;font-size:18px;flex:none}
+.player button{border:0;background:var(--accent);color:#fff;width:44px;height:44px;font-size:17px;flex:none}
+.player #skip{background:transparent;border:1px solid #fff;font:600 12px "Libre Franklin",sans-serif}
 .player .t{flex:1;min-width:0}
-.player .n{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player input{width:100%;accent-color:var(--accent)}
-.player .s{font-size:11px;opacity:.7}
-.empty{color:var(--mute);text-align:center;padding:40px 0}
+.player .n{font:500 15px Jost,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player input{width:100%;accent-color:#3fb8af;margin:2px 0}
+.player .s{font-size:11px;opacity:.75}
+.leaflet-container{font-family:"Libre Franklin",sans-serif}
 </style>
 </head>
 <body>
 <header>
-  <h1>Berlin History Walks</h1>
-  <div class="row">
-    <div class="tabs"><button id="tList" class="on">List</button><button id="tMap">Map</button></div>
-    <button id="locate" class="locate">📍 Near me</button>
+  <div class="top">
+    <div class="brand"><svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><rect x="96" y="150" width="320" height="34"/><rect x="120" y="196" width="28" height="190"/><rect x="186" y="196" width="28" height="190"/><rect x="298" y="196" width="28" height="190"/><rect x="364" y="196" width="28" height="190"/><rect x="84" y="386" width="344" height="30"/><path d="M216 150l40-52 40 52z"/></g></svg><span>Berlin <b>History</b></span></div>
+    <button id="locate" class="locate"><span>⌖</span>Near me</button>
   </div>
-  <div class="chips" id="chips"></div>
+  <div class="tabs"><button id="tList" class="on">Places</button><button id="tMap">Map</button></div>
 </header>
-<main id="list"></main>
+<div class="band"><div class="chips" id="chips"></div></div>
+<main id="main">
+  <div class="hero"><img src="img/brandenburg-gate.jpg" alt=""><div class="labels"><h1>Berlin 1914–1989</h1><p>A walking audioguide</p></div></div>
+  <p class="intro">From the Kaiser's war to the fall of the Wall: <a href="#" id="introMap">32 places</a> where the twentieth century happened, each with a <strong>two-minute audio story</strong>.</p>
+  <div class="list" id="list"></div>
+</main>
 <div id="map" hidden></div>
 
 <section class="sheet" id="sheet" aria-hidden="true">
-  <button class="close" id="close" aria-label="Close">×</button>
+  <button class="close" id="close">‹ Back</button>
   <div id="detail"></div>
 </section>
 
@@ -106,7 +136,7 @@ async function init() {
   DATA = await (await fetch('data/places.json')).json();
   try { CREDITS = await (await fetch('data/credits.json')).json(); } catch {}
   const chips = [['all','All', '#888'], ...Object.entries(DATA.eras).map(([k,v]) => [k, v.label, v.color])];
-  $('#chips').innerHTML = chips.map(([k,l,c]) => `<button class="chip${k==='all'?' on':''}" data-era="${k}">${k==='all'?'':`<span class="dot" style="background:${c}"></span> `}${l}</button>`).join('');
+  $('#chips').innerHTML = chips.map(([k,l,c]) => `<button class="chip${k==='all'?' on':''}" data-era="${k}">${k==='all'?'':`<i class="dot" style="background:${c}"></i>`}${l}</button>`).join('');
   $('#chips').onclick = e => { const b = e.target.closest('.chip'); if (!b) return;
     era = b.dataset.era; document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b)); render(); };
   render();
@@ -123,9 +153,10 @@ function render() {
   const ps = filtered();
   $('#list').innerHTML = ps.length ? ps.map(p => `
     <button class="card${visited.has(p.id)?' done':''}" data-id="${p.id}">
-      <img src="img/${p.id}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
-      <div><h2>${visited.has(p.id)?'✓ ':''}${esc(p.name)}</h2><p>${esc(p.summary)}</p>
-      <div class="meta">${p.d!=null?`<span class="dist">${fmtD(p.d)}</span>`:''}${p.eras.map(e=>`<span class="dot" title="${DATA.eras[e].label}" style="background:${DATA.eras[e].color}"></span>`).join('')}</div></div>
+      <div class="ph"><img src="img/${p.id}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+        <div class="labels"><h2>${visited.has(p.id)?'✓ ':''}${esc(p.name)}</h2>${p.d!=null?`<span class="d">${fmtD(p.d)}</span>`:''}</div></div>
+      <div class="txt"><p>${esc(p.summary)} <span class="more">Listen →</span></p>
+      <div class="meta">${p.eras.map(e=>`<span><i class="dot" style="background:${DATA.eras[e].color}"></i>${DATA.eras[e].label}</span>`).join('')}</div></div>
     </button>`).join('') : '<p class="empty">No places for this filter.</p>';
   if (map) drawMarkers();
 }
@@ -134,9 +165,9 @@ $('#list').onclick = e => { const c = e.target.closest('.card'); if (c) open(c.d
 // --- map ---
 function showMap(on) {
   $('#tMap').classList.toggle('on', on); $('#tList').classList.toggle('on', !on);
-  $('#list').hidden = on; $('#map').hidden = !on;
+  $('#main').hidden = on; $('#map').hidden = !on;
   if (on) {
-    $('#map').style.top = $('header').offsetHeight + 'px';
+    $('#map').style.top = ($('header').offsetHeight + $('.band').offsetHeight) + 'px';
     if (!map) { map = L.map('map', {zoomControl:false}).setView([52.515, 13.39], 12);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map); drawMarkers(); }
     setTimeout(() => map.invalidateSize(), 50);
@@ -154,6 +185,7 @@ function drawMarkers() {
 }
 $('#tList').onclick = () => showMap(false);
 $('#tMap').onclick = () => showMap(true);
+$('#introMap').onclick = e => { e.preventDefault(); showMap(true); };
 
 // --- geolocation ---
 let watch;
@@ -174,18 +206,22 @@ function open(id) {
   const p = DATA.places.find(x => x.id === id); if (!p) return;
   const cr = CREDITS[p.id];
   const d = pos ? `<span class="dist">${fmtD(km(pos,p))} away</span> · ` : '';
+  const paras = p.script.split(/(?<=\.)\s+(?=[A-Z])/).reduce((a,s,i)=>{const k=Math.floor(i/4);(a[k]=a[k]||[]).push(s);return a},[]).map(g=>`<p>${esc(g.join(' '))}</p>`).join('');
   $('#detail').innerHTML = `
-    <img class="hero" src="img/${p.id}.jpg" alt="${esc(p.name)}" onerror="this.style.display='none'">
+    <div class="hero"><img src="img/${p.id}.jpg" alt="${esc(p.name)}" onerror="this.style.visibility='hidden'">
+      <div class="labels"><h2>${esc(p.name)}</h2><p>${p.eras.map(e=>DATA.eras[e].label).join(' · ')}</p></div>
+      ${cr?`<span class="credit-ov">© ${esc(cr.author.slice(0,40))}</span>`:''}</div>
+    <div class="crumb">Berlin History › ${esc(DATA.eras[p.eras[0]].label)} › ${esc(p.name)}</div>
     <div class="body">
-      <h2>${esc(p.name)}</h2>
       <div class="addr">${d}${esc(p.address)}</div>
-      <div class="meta">${p.eras.map(e=>`<span class="chip" style="font-size:12px;padding:3px 9px"><span class="dot" style="background:${DATA.eras[e].color}"></span> ${DATA.eras[e].label}</span>`).join('')}</div>
+      <div class="meta">${p.eras.map(e=>`<span><i class="dot" style="background:${DATA.eras[e].color}"></i>${DATA.eras[e].label}</span>`).join('')}</div>
       <div class="actions">
-        <button class="btn primary" id="play">▶ Play audioguide</button>
-        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${p.lat},${p.lng}">🧭 Directions</a>
+        <button class="btn primary" id="play">▶  Play audioguide</button>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${p.lat},${p.lng}">Directions</a>
         <button class="btn" id="visit">${visited.has(p.id)?'✓ Visited':'Mark visited'}</button>
       </div>
-      <div class="script">${p.script.split(/(?<=\.)\s+(?=[A-Z])/).reduce((a,s,i)=>{const k=Math.floor(i/4);(a[k]=a[k]||[]).push(s);return a},[]).map(g=>`<p>${esc(g.join(' '))}</p>`).join('')}</div>
+      <p class="lead">${esc(p.summary)}</p>
+      <div class="script">${paras}</div>
       ${cr?`<div class="credit">Photo: ${esc(cr.author)} · ${esc(cr.license||'')} · <a href="${cr.source}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`:''}
     </div>`;
   $('#play').onclick = () => play(p);
@@ -226,6 +262,8 @@ audio.ontimeupdate = () => { $('#seek').value = audio.duration ? audio.currentTi
 $('#seek').oninput = e => { if (audio.duration) audio.currentTime = e.target.value / 100 * audio.duration; };
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+const setHH = () => document.documentElement.style.setProperty('--hh', $('header').offsetHeight + 'px');
+addEventListener('resize', setHH); setHH();
 init();
 </script>
 </body>

@@ -1,0 +1,476 @@
+{
+  "eras": {
+    "wwi": {
+      "label": "WWI & Empire",
+      "color": "#8a6d3b"
+    },
+    "weimar": {
+      "label": "Weimar Republic",
+      "color": "#2f7d6d"
+    },
+    "reich": {
+      "label": "Third Reich",
+      "color": "#9b2c2c"
+    },
+    "wwii": {
+      "label": "WWII",
+      "color": "#5a5a5a"
+    },
+    "coldwar": {
+      "label": "Cold War",
+      "color": "#2b5aa0"
+    }
+  },
+  "places": [
+    {
+      "id": "reichstag",
+      "name": "Reichstag",
+      "eras": [
+        "wwi",
+        "weimar",
+        "reich",
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Platz der Republik 1",
+      "lat": 52.5186,
+      "lng": 13.3762,
+      "wiki": "Reichstag building",
+      "summary": "Parliament of the Empire and the Weimar Republic. It burned in 1933 and became a symbol of the Soviet victory in 1945.",
+      "script": "You are standing in front of the Reichstag, the building that has seen more of German history than almost any other. It opened in 1894 as the parliament of the German Empire, and the inscription 'Dem deutschen Volke', 'To the German people', was added during the First World War in 1916. On the ninth of November 1918, as the Kaiser's regime collapsed, the Social Democrat Philipp Scheidemann stepped onto a balcony here and proclaimed the German Republic. Fifteen years later, on the night of the twenty-seventh of February 1933, the building burned. Hitler's government blamed the communists and, the very next day, used an emergency decree to suspend civil liberties, a decisive step towards dictatorship. In the spring of 1945 the Reichstag became a target for the Red Army, and the photograph of a Soviet soldier raising the red flag on its roof became one of the most famous images of the war. Look for Cyrillic graffiti left by Soviet soldiers, still preserved inside. During the Cold War the building stood right next to the Wall, unused as a parliament. After reunification, architect Norman Foster added the glass dome, and since 1999 it has again housed the German parliament, the Bundestag. You can visit the dome for free, but you must register online in advance."
+    },
+    {
+      "id": "brandenburg-gate",
+      "name": "Brandenburg Gate",
+      "eras": [
+        "wwi",
+        "reich",
+        "coldwar"
+      ],
+      "address": "Pariser Platz",
+      "lat": 52.5163,
+      "lng": 13.3777,
+      "wiki": "Brandenburg Gate",
+      "summary": "Prussian triumphal gate, Nazi parade stage, then trapped in the death strip for 28 years.",
+      "script": "The Brandenburg Gate was completed in 1791 as a gate of peace, crowned by the Quadriga, a chariot driven by the goddess of victory. Napoleon took the Quadriga to Paris in 1806; when it returned after his defeat, it became a symbol of Prussian triumph. Imperial troops marched through it, and in 1914 crowds gathered nearby to cheer the start of the First World War. On the night of the thirtieth of January 1933, the Nazis staged a torchlight parade through the gate to celebrate Hitler's appointment as Chancellor. The gate survived the war badly damaged. After 1961 it stood in no man's land, just inside East Berlin, with the Wall running in front of it. Nobody from either side could pass through. In 1987 Ronald Reagan spoke on the western side, calling on Mikhail Gorbachev to tear down this wall. Two years later, in December 1989, the gate was reopened, and it became the symbol of German reunification. Notice the double row of cobblestones in the ground nearby: they mark the line of the Wall throughout the city."
+    },
+    {
+      "id": "neue-wache",
+      "name": "Neue Wache",
+      "eras": [
+        "wwi",
+        "weimar",
+        "reich",
+        "coldwar"
+      ],
+      "address": "Unter den Linden 4",
+      "lat": 52.5177,
+      "lng": 13.3954,
+      "wiki": "Neue Wache",
+      "summary": "Prussian guardhouse that became a memorial to the WWI dead, and today Germany's memorial to all victims of war and tyranny.",
+      "script": "This small classical building, designed by Karl Friedrich Schinkel, was built in 1818 as a guardhouse for the Prussian king. After the First World War, in 1931, the Weimar Republic turned it into a memorial for the fallen of that war, with a silver wreath under an opening in the roof. The Nazis renamed it a memorial for heroes and used it for military ceremonies. In communist East Germany it became a memorial to the victims of fascism and militarism, guarded by goose-stepping soldiers of the National People's Army, a ritual that tourists from the West came to watch. Since 1993 it has been the Central Memorial of the Federal Republic for the victims of war and dictatorship. Step inside: the room is almost empty, apart from an enlarged copy of a sculpture by Käthe Kollwitz, a mother holding her dead son. Kollwitz lost her own son, Peter, in the first weeks of the First World War. The opening in the ceiling lets rain and snow fall on the figure."
+    },
+    {
+      "id": "invalidenfriedhof",
+      "name": "Invalidenfriedhof",
+      "eras": [
+        "wwi",
+        "reich",
+        "coldwar"
+      ],
+      "address": "Scharnhorststraße 25",
+      "lat": 52.5306,
+      "lng": 13.3741,
+      "wiki": "Invalidenfriedhof",
+      "summary": "Prussian military cemetery with WWI commanders' graves, later cut through by the Berlin Wall.",
+      "script": "The Invalidenfriedhof is one of Berlin's oldest cemeteries, founded in 1748 for wounded veterans. It became the resting place of the Prussian and German military elite. Here you can find the graves of generals of the First World War, including Alfred von Schlieffen, author of the famous plan to defeat France, and the air ace Manfred von Richthofen, the Red Baron, buried here in 1925. The Nazis also buried senior figures here, among them Reinhard Heydrich. His grave was unmarked after the war. After 1961, the border between East and West ran right along the cemetery wall, and much of the cemetery became part of the death strip. Graves were levelled, and visits required special permits. Along the canal side you can still see a preserved section of the hinterland wall and the old patrol road. It is a quiet place where Prussian militarism, Nazism and the Cold War overlap in a few hundred metres."
+    },
+    {
+      "id": "liebknecht-luxemburg",
+      "name": "Rosa Luxemburg Memorial, Landwehr Canal",
+      "eras": [
+        "weimar"
+      ],
+      "address": "Lichtensteinbrücke, Tiergarten",
+      "lat": 52.5081,
+      "lng": 13.3415,
+      "wiki": "Rosa Luxemburg",
+      "summary": "Where the body of the communist leader was thrown into the canal in January 1919.",
+      "script": "The Weimar Republic was born in violence. In January 1919, weeks after the end of the First World War, radical left wing groups tried to seize power in Berlin in what became known as the Spartacist uprising. The Social Democratic government used volunteer paramilitary units, the Freikorps, to crush it. On the fifteenth of January, the two leading figures of the new Communist Party, Rosa Luxemburg and Karl Liebknecht, were captured and taken to the Hotel Eden nearby. Both were murdered that night. Luxemburg was shot and her body thrown into the Landwehr Canal here; it was only found months later. A metal inscription on the bank marks the spot. The killings were never properly punished, and they deepened the hostility between Social Democrats and Communists that would weaken the left throughout the Weimar years, until the Nazis came to power. Some of the Freikorps men involved later joined the Nazi movement."
+    },
+    {
+      "id": "kurfuerstendamm",
+      "name": "Kurfürstendamm",
+      "eras": [
+        "weimar",
+        "coldwar"
+      ],
+      "address": "Kurfürstendamm, Charlottenburg",
+      "lat": 52.5034,
+      "lng": 13.329,
+      "wiki": "Kurfürstendamm",
+      "summary": "The boulevard of Weimar Berlin's cinemas, cabarets and cafés, later the shop window of West Berlin.",
+      "script": "In the Golden Twenties, the Kurfürstendamm was the heart of modern Berlin. After the hyperinflation of 1923, the economy stabilised and Berlin became one of the most exciting cities in the world: cinemas, cabarets, jazz clubs and cafés lined this boulevard. Writers, artists and actors met at places like the Romanisches Café, near the Memorial Church. This was the Berlin of Marlene Dietrich, of Bertolt Brecht, and of the novels of Christopher Isherwood that later inspired the musical Cabaret. It was also a city of poverty, political street fighting and unemployment, especially after the crash of 1929. On the Ku'damm, Nazi thugs attacked Jewish shoppers as early as 1931. During the Cold War, this boulevard became the showcase of the West, full of shops and lights, a deliberate contrast with the grey East just a few kilometres away."
+    },
+    {
+      "id": "bauhaus-archiv",
+      "name": "Bauhaus-Archiv",
+      "eras": [
+        "weimar",
+        "reich"
+      ],
+      "address": "Klingelhöferstraße 14",
+      "lat": 52.5088,
+      "lng": 13.3575,
+      "wiki": "Bauhaus Archive",
+      "summary": "Archive of the Bauhaus school, whose last home was Berlin until the Nazis forced it to close in 1933.",
+      "script": "The Bauhaus was founded in Weimar in 1919, the same year and in the same city as the new republic, and it became the most influential design school of the twentieth century. It moved to Dessau and, in 1932, to an old factory in Berlin, under the direction of Ludwig Mies van der Rohe. The Nazis saw modern architecture as un-German and cultural Bolshevism. In April 1933 police searched the Berlin building, and in July the teachers decided to close the school rather than accept Nazi conditions. Many Bauhaus artists emigrated, spreading its ideas to the United States and elsewhere. This building, with its distinctive saw-tooth roof, was designed by Walter Gropius, the school's founder, and completed after his death. The museum is being renovated and expanded, so check opening times; there is a temporary exhibition space nearby."
+    },
+    {
+      "id": "bebelplatz",
+      "name": "Bebelplatz – Book Burning Memorial",
+      "eras": [
+        "reich"
+      ],
+      "address": "Bebelplatz, Mitte",
+      "lat": 52.5163,
+      "lng": 13.3938,
+      "wiki": "Bebelplatz",
+      "summary": "Site of the Nazi book burning of 10 May 1933, marked by an underground room of empty shelves.",
+      "script": "On the evening of the tenth of May 1933, students, professors and members of the SA gathered on this square, in front of the university. They threw around twenty thousand books onto a bonfire, works by Jewish, socialist, pacifist and other authors considered un-German: Heinrich Heine, Karl Marx, Sigmund Freud, Erich Maria Remarque, Kurt Tucholsky and many more. Propaganda Minister Joseph Goebbels gave a speech declaring the end of the age of extreme Jewish intellectualism. Similar burnings took place in university towns across Germany. In the middle of the square, look down through the glass panel in the pavement. Below you is a memorial by Micha Ullman: a white room lined with empty bookshelves, enough to hold the twenty thousand burned books. Nearby, a plaque quotes Heinrich Heine, writing more than a century earlier: where they burn books, they will in the end also burn people."
+    },
+    {
+      "id": "topography-of-terror",
+      "name": "Topography of Terror",
+      "eras": [
+        "reich",
+        "coldwar"
+      ],
+      "address": "Niederkirchnerstraße 8",
+      "lat": 52.5065,
+      "lng": 13.3837,
+      "wiki": "Topography of Terror",
+      "summary": "Site of the Gestapo and SS headquarters, now a free documentation centre. A section of the Wall stands alongside.",
+      "script": "This empty site was once the most feared address in Nazi Germany. From 1933, the Gestapo, the secret state police, had its headquarters here, in a former art school at Prinz-Albrecht-Strasse 8. The leadership of the SS and, from 1939, the Reich Security Main Office were based nearby. From here, Heinrich Himmler and Reinhard Heydrich organised the persecution of political opponents and the deportation and murder of Europe's Jews. Prisoners were interrogated and tortured in the basement cells. The buildings were bombed in the war and demolished afterwards, and for decades the area was a forgotten wasteland next to the Berlin Wall. In the 1980s, citizens dug and uncovered the cellar foundations. Today the documentation centre is free and one of the best places in Berlin to understand how the Nazi terror system worked. Along the street you can see one of the longest surviving sections of the Wall in the city centre."
+    },
+    {
+      "id": "air-ministry",
+      "name": "Former Reich Air Ministry",
+      "eras": [
+        "reich",
+        "coldwar"
+      ],
+      "address": "Wilhelmstraße 97",
+      "lat": 52.5079,
+      "lng": 13.3829,
+      "wiki": "Detlev-Rohwedder-Haus",
+      "summary": "Göring's Air Ministry, one of the few large Nazi buildings to survive, later the GDR's House of Ministries.",
+      "script": "This massive building was built in 1935 and 1936 for Hermann Göring's Reich Air Ministry, which led the rebuilding of the German air force in violation of the Treaty of Versailles. With more than two thousand rooms, it was one of the largest office buildings in Europe, and it is one of the few major Nazi government buildings that survived the war almost intact. In October 1949, the German Democratic Republic was founded here. As the House of Ministries, it was the target of the protests of the seventeenth of June 1953, when construction workers marched here demanding lower work quotas and free elections. The uprising was crushed by Soviet tanks. On the north side, look for the large socialist mural showing happy workers; in front of it, a photographic installation of the 1953 protesters shows a very different reality. Today the building houses the German Finance Ministry."
+    },
+    {
+      "id": "fuehrerbunker",
+      "name": "Site of the Führerbunker",
+      "eras": [
+        "reich",
+        "wwii"
+      ],
+      "address": "Corner of In den Ministergärten and Gertrud-Kolmar-Straße",
+      "lat": 52.5124,
+      "lng": 13.3813,
+      "wiki": "Führerbunker",
+      "summary": "An ordinary car park above the bunker where Hitler killed himself on 30 April 1945.",
+      "script": "There is almost nothing to see here, and that is deliberate. Beneath this car park and the apartment blocks around it lay the Führerbunker, an air raid shelter behind the New Reich Chancellery. Hitler moved underground in January 1945 and spent his last months here, while the Red Army closed in on Berlin. On the twenty-ninth of April he married Eva Braun; the next day, the thirtieth of April, the two killed themselves, and their bodies were burned in the garden above. Joseph and Magda Goebbels killed their six children and then themselves the following day. Berlin surrendered on the second of May. After the war, the Soviets blew up much of the bunker, and the area later fell into the border strip. The East German government built housing over it in the late 1980s, and the site was left unmarked to avoid creating a shrine. Since 2006, an information board explains what lies beneath."
+    },
+    {
+      "id": "holocaust-memorial",
+      "name": "Memorial to the Murdered Jews of Europe",
+      "eras": [
+        "reich",
+        "wwii"
+      ],
+      "address": "Cora-Berliner-Straße 1",
+      "lat": 52.5139,
+      "lng": 13.3787,
+      "wiki": "Memorial to the Murdered Jews of Europe",
+      "summary": "Peter Eisenman's field of 2,711 concrete stelae, with an information centre underneath.",
+      "script": "This field of 2,711 concrete blocks, called stelae, was designed by the American architect Peter Eisenman and opened in 2005. It commemorates the six million Jews murdered by Nazi Germany. The memorial gives no single explanation. As you walk in, the ground slopes downwards and the stelae grow taller, until the city noise fades and you may lose sight of the people you came with. Many visitors describe a sense of disorientation and isolation. The location is significant: you are a short walk from where Hitler's Chancellery stood, in the old government quarter. Please do not climb or jump on the stelae. Below the eastern edge is the free information centre. Do not skip it. It tells the individual stories of victims and families, including the Room of Names, where the names and short biographies of murdered Jews are read aloud, one by one."
+    },
+    {
+      "id": "bendlerblock",
+      "name": "Bendlerblock – German Resistance Memorial",
+      "eras": [
+        "reich",
+        "wwii"
+      ],
+      "address": "Stauffenbergstraße 13–14",
+      "lat": 52.5075,
+      "lng": 13.3627,
+      "wiki": "German Resistance Memorial Center",
+      "summary": "Army headquarters where Stauffenberg and the 20 July 1944 plotters were executed.",
+      "script": "The Bendlerblock was the headquarters of the German army, and it was here that the most famous attempt to kill Hitler was coordinated. On the twentieth of July 1944, Colonel Claus Schenk Graf von Stauffenberg placed a bomb in a briefcase at Hitler's headquarters in East Prussia. The bomb exploded, but Hitler survived. Back in Berlin, the conspirators tried to seize control of the government, but the coup collapsed within hours. That same night, Stauffenberg and three fellow officers were shot by a firing squad in this courtyard. A bronze statue and a plaque mark the place. In the weeks that followed, thousands were arrested and around two hundred executed. Upstairs, the German Resistance Memorial Center tells the story not only of the military plot but of all forms of resistance: workers, students like the White Rose, churches, Jews, and ordinary people who helped those in hiding. Entry is free."
+    },
+    {
+      "id": "wannsee",
+      "name": "House of the Wannsee Conference",
+      "eras": [
+        "reich",
+        "wwii"
+      ],
+      "address": "Am Großen Wannsee 56–58",
+      "lat": 52.4334,
+      "lng": 13.1658,
+      "wiki": "House of the Wannsee Conference",
+      "summary": "Lakeside villa where senior officials coordinated the 'Final Solution' on 20 January 1942.",
+      "script": "This elegant lakeside villa seems like the last place to associate with genocide. On the twentieth of January 1942, Reinhard Heydrich invited fifteen senior officials from the SS, the Nazi Party and government ministries here for a meeting over breakfast. The decision to murder the Jews of Europe had in practice already begun: mass shootings in the occupied Soviet Union had killed hundreds of thousands. The purpose of the meeting was coordination, to make sure the ministries cooperated with the SS in deporting and killing around eleven million Jews across Europe. The minutes, prepared by Adolf Eichmann, survived in a single copy found after the war. Their bureaucratic language, using words like evacuation and treatment, makes them all the more chilling. The meeting lasted about ninety minutes. Today the villa is a memorial and education centre, with a free exhibition. Allow time for the journey: it is about forty minutes from the centre by S-Bahn and bus."
+    },
+    {
+      "id": "gleis-17",
+      "name": "Gleis 17 – Grunewald Station",
+      "eras": [
+        "reich",
+        "wwii"
+      ],
+      "address": "S-Bahnhof Grunewald",
+      "lat": 52.4887,
+      "lng": 13.2614,
+      "wiki": "Platform 17 Memorial",
+      "summary": "Platform from which Berlin's Jews were deported to ghettos and death camps.",
+      "script": "From October 1941, Berlin's Jews were deported to ghettos and extermination camps in the east. Many of the trains left from this suburban station in Grunewald, chosen because it was out of sight. Track 17 is now a memorial. Along both edges of the platform, 186 steel plates list every transport in chronological order: the date, the number of people, and the destination. Lodz, Riga, Minsk, Theresienstadt, and from 1942, Auschwitz. As you walk, notice how the numbers rise and then shrink as the Jewish community of Berlin disappears. More than fifty thousand Berlin Jews were deported, and most were murdered. The memorial was created by Deutsche Bahn, the German railway, acknowledging that the national railway transported millions of people to their deaths. No train will ever leave from this track again; trees have been allowed to grow between the rails.",
+      "photo_search": "Gleis 17 Grunewald Mahnmal"
+    },
+    {
+      "id": "olympiastadion",
+      "name": "Olympiastadion",
+      "eras": [
+        "reich",
+        "coldwar"
+      ],
+      "address": "Olympischer Platz 3",
+      "lat": 52.5147,
+      "lng": 13.2395,
+      "wiki": "Olympiastadion (Berlin)",
+      "summary": "Stadium of the 1936 Nazi Olympics and Jesse Owens's four gold medals.",
+      "script": "The Olympic Stadium was built for the 1936 Summer Games, which the Nazi regime turned into a huge propaganda event. For two weeks, anti-Jewish signs were removed from Berlin, and the world saw an orderly, modern Germany. The monumental architecture, the giant bell tower and the classical statues were designed to impress. The games also brought the first live television broadcasts and Leni Riefenstahl's famous film Olympia. But the most remembered athlete was the African American runner Jesse Owens, who won four gold medals, a direct contradiction of Nazi racial ideology. A street next to the stadium is now named after him. After the war, the British used the area as their headquarters in Berlin. The stadium was renovated for the 2006 World Cup, keeping its original structure. Look around for the remaining sculptures and the Maifeld, the parade ground behind it, which give a sense of the original Nazi design."
+    },
+    {
+      "id": "tempelhof",
+      "name": "Tempelhof Airport",
+      "eras": [
+        "reich",
+        "coldwar"
+      ],
+      "address": "Platz der Luftbrücke 5",
+      "lat": 52.4813,
+      "lng": 13.3895,
+      "wiki": "Berlin Tempelhof Airport",
+      "summary": "Nazi-era airport building and the hub of the 1948–49 Berlin Airlift. Its airfield is now a public park.",
+      "script": "Tempelhof was one of the world's first commercial airports. The vast curved terminal you see was built under the Nazis from 1936, as part of Hitler's plans to remake Berlin as a world capital. For a time it was among the largest buildings in the world. During the war it housed aircraft production, using forced labourers. Nearby was an early concentration camp, Columbia-Haus. But Tempelhof is best remembered for the Cold War. In June 1948 the Soviets blocked all land routes into West Berlin. The Western Allies responded with the Berlin Airlift: for almost a year, planes landed here every few minutes, delivering food and coal to two million people. Pilots dropping sweets to children on small parachutes became known as Candy Bombers. In front of the terminal, the Airlift Memorial, nicknamed the hunger rake, points west. The airport closed in 2008, and the airfield is now a huge public park. Guided tours of the building are available."
+    },
+    {
+      "id": "kaiser-wilhelm-church",
+      "name": "Kaiser Wilhelm Memorial Church",
+      "eras": [
+        "wwi",
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Breitscheidplatz",
+      "lat": 52.5048,
+      "lng": 13.335,
+      "wiki": "Kaiser Wilhelm Memorial Church",
+      "summary": "Imperial church ruined by bombing in 1943 and kept as a war memorial.",
+      "script": "This church was built in the 1890s by Kaiser Wilhelm the Second, in honour of his grandfather, Wilhelm the First, the first emperor of united Germany. Inside, mosaics glorified the Hohenzollern dynasty. On the night of the twenty-third of November 1943, during a massive RAF air raid, the church was hit and burned. The damaged tower was left standing. In the 1950s, planners wanted to demolish it, but Berliners protested, and the broken tower, nicknamed the hollow tooth, was kept as a memorial against war. Next to it, the architect Egon Eiermann built a new church and bell tower with walls of blue glass. Step inside: the blue light is remarkable. In the old tower's memorial hall, you can see the surviving imperial mosaics and photos of the destruction. In front of the church, a golden crack in the ground commemorates the victims of the 2016 terrorist attack on the Christmas market here."
+    },
+    {
+      "id": "humboldthain-flak-tower",
+      "name": "Humboldthain Flak Tower",
+      "eras": [
+        "wwii"
+      ],
+      "address": "Humboldthain Park, Gustav-Meyer-Allee",
+      "lat": 52.5448,
+      "lng": 13.3846,
+      "wiki": "Flak tower",
+      "summary": "Partly demolished anti-aircraft fortress, with a viewing platform and underground tours.",
+      "script": "During the Second World War, Berlin built three enormous concrete flak towers to defend the city against Allied bombers. Each was a fortress with anti-aircraft guns on the roof and shelters for thousands of civilians inside. The walls were more than two metres thick. The tower in Humboldthain park was one of them. In the final battle for Berlin in April and May 1945, these towers held out against the Red Army until the city surrendered. After the war, the French, who controlled this sector, tried to blow it up. They only partly succeeded, because the structure was so strong. Rubble from the ruined city was piled against it, so today it looks like a hill. You can climb to the viewing platform for a view over northern Berlin. The association Berliner Unterwelten offers guided tours inside the tower from spring to autumn.",
+      "photo_search": "Flakturm Humboldthain"
+    },
+    {
+      "id": "story-bunker",
+      "name": "Anhalter Bahnhof & Berlin Story Bunker",
+      "eras": [
+        "reich",
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Schöneberger Straße 23A",
+      "lat": 52.5034,
+      "lng": 13.3811,
+      "wiki": "Anhalter Bahnhof",
+      "summary": "Ruined façade of a major rail terminal and a wartime air raid shelter that now holds a WWII museum.",
+      "script": "Here you can see two traces of the war side by side. First, the lonely brick portal: it is all that is left of Anhalter Bahnhof, once one of Berlin's great railway stations, which connected the city to southern Germany and Europe. From 1942, around ten thousand Jews were deported from here, mostly to the Theresienstadt ghetto, in ordinary passenger carriages attached to scheduled trains. The station was bombed, and in the 1960s, the ruins were demolished, except for this portal. Nearby, the large windowless concrete block is a wartime air raid shelter, built for travellers. Up to twelve thousand people crowded inside during the final weeks of the war. Today it houses the Berlin Story Bunker, a private museum with an exhibition on Hitler and Nazism, and how it could happen, and a detailed model of the Führerbunker. Admission is charged."
+    },
+    {
+      "id": "soviet-memorial-tiergarten",
+      "name": "Soviet War Memorial, Tiergarten",
+      "eras": [
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Straße des 17. Juni",
+      "lat": 52.5163,
+      "lng": 13.3716,
+      "wiki": "Soviet War Memorial (Tiergarten)",
+      "summary": "Memorial built in 1945 by the Red Army, in what became the British sector.",
+      "script": "This memorial was built by the Soviet army in 1945, just months after the battle of Berlin, using marble said to come from the ruins of Hitler's Chancellery. It honours the Soviet soldiers who died taking the city, around eighty thousand in the final battle. About two thousand are buried behind the colonnade. On top stands a bronze soldier, and in front are two of the T-34 tanks said to have been among the first to enter Berlin, and two artillery guns. The location became strange during the Cold War: the memorial stood in the British sector of West Berlin, but Soviet soldiers continued to guard it. British troops, in turn, had to protect the Soviet guards from angry West Berliners, especially after the Wall was built. The street in front, Strasse des 17. Juni, is named after the East German workers' uprising of 1953."
+    },
+    {
+      "id": "treptower-park",
+      "name": "Soviet War Memorial, Treptower Park",
+      "eras": [
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Puschkinallee, Treptower Park",
+      "lat": 52.4869,
+      "lng": 13.4692,
+      "wiki": "Soviet War Memorial (Treptower Park)",
+      "summary": "Monumental Soviet memorial and cemetery for about 7,000 Red Army soldiers.",
+      "script": "This is the largest Soviet war memorial outside the former Soviet Union, completed in 1949. Around seven thousand Soviet soldiers who died in the battle of Berlin are buried here. You enter through a gate, past a statue of a grieving Mother Russia, and then walk between two huge granite flags, lowered in mourning, towards the main avenue. Along the sides are sixteen sarcophagi, one for each Soviet republic, decorated with reliefs of the war and quotations from Stalin, still in place today. At the end, on a mound, stands a twelve metre statue of a Soviet soldier holding a child and a sword, crushing a broken swastika beneath his feet. In East Germany, the site was used for official ceremonies and youth oaths. It is a powerful example of Soviet monumental art. It also reminds you how the victory over Nazism became the founding myth of the communist state."
+    },
+    {
+      "id": "seelow-heights",
+      "name": "Seelow Heights Memorial (day trip)",
+      "eras": [
+        "wwii"
+      ],
+      "address": "Küstriner Straße 28, Seelow",
+      "lat": 52.5346,
+      "lng": 14.3809,
+      "wiki": "Battle of the Seelow Heights",
+      "summary": "Site of the last great battle before Berlin, April 1945. About 90 minutes from the city by train.",
+      "script": "About seventy kilometres east of Berlin, near the river Oder, the Seelow Heights rise above a flat valley. This was the last natural line of defence before Berlin. On the sixteenth of April 1945, Marshal Zhukov launched the final Soviet offensive with a massive artillery bombardment and powerful searchlights meant to blind the defenders. The searchlights backfired, lighting up the attackers in the smoke and fog. For three days, German troops held out at enormous cost. Tens of thousands of soldiers on both sides died. Then the line broke, and the road to Berlin was open. Less than two weeks later, the city was surrounded. The memorial on the hill, built in 1945, includes a museum, a Soviet cemetery and tanks and guns from the battle. It is a quiet, sobering place. You need half a day to visit, by regional train to Seelow-Gusow."
+    },
+    {
+      "id": "checkpoint-charlie",
+      "name": "Checkpoint Charlie",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Friedrichstraße 43–45",
+      "lat": 52.5075,
+      "lng": 13.3904,
+      "wiki": "Checkpoint Charlie",
+      "summary": "The best-known crossing between East and West, scene of the 1961 tank standoff.",
+      "script": "Checkpoint Charlie was the Allied name for the crossing point between the American and Soviet sectors on Friedrichstrasse. Charlie is simply the letter C in the military alphabet. It was the only crossing for diplomats, Allied personnel and foreign visitors. In October 1961, just weeks after the Wall was built, a dispute over the right of American officials to enter East Berlin escalated. For sixteen hours, American and Soviet tanks faced each other here, just a hundred metres apart, with live ammunition. It was one of the most dangerous moments of the Cold War, until both sides quietly withdrew. The checkpoint was also the scene of daring escapes and of tragedy: in 1962, eighteen-year-old Peter Fechter was shot trying to cross nearby and bled to death in front of hundreds of witnesses. A memorial column stands a few streets away on Zimmerstrasse. Today the guard hut is a replica, and the area is very touristy. The free outdoor exhibition and the Wall Museum offer the real stories."
+    },
+    {
+      "id": "bernauer-strasse",
+      "name": "Berlin Wall Memorial, Bernauer Straße",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Bernauer Straße 111",
+      "lat": 52.5352,
+      "lng": 13.3903,
+      "wiki": "Berlin Wall Memorial",
+      "summary": "The best place to understand the Wall: a preserved strip, watchtower, and stories of escape.",
+      "script": "If you visit only one Wall site, make it this one. On the thirteenth of August 1961, Bernauer Strasse found itself split in two: the houses were in the East, but the pavement in front of them was in the West. In the first days, residents jumped from their windows into the West, as West Berlin firemen held out nets. Some died in the attempt. The East German authorities bricked up the windows and later demolished the houses. Here you can see a preserved section of the border: the inner wall, the death strip, the patrol road, the lights and a watchtower. Climb the viewing tower at the Documentation Centre for the best view. Along the street, steel rods trace the line of the Wall, and marks in the ground show the routes of escape tunnels. The Window of Remembrance displays photographs of people killed at the Wall. The open-air memorial is free."
+    },
+    {
+      "id": "east-side-gallery",
+      "name": "East Side Gallery",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Mühlenstraße, Friedrichshain",
+      "lat": 52.505,
+      "lng": 13.4397,
+      "wiki": "East Side Gallery",
+      "summary": "The longest surviving stretch of the Wall, painted by artists in 1990.",
+      "script": "This is the longest surviving section of the Berlin Wall, about 1.3 kilometres along the river Spree. It is actually the inner wall, the one facing East Berlin; the river itself was the border. In East German times, no one could paint on it. In 1990, after the Wall fell, more than a hundred artists from around the world were invited to cover it with murals, creating an open-air gallery. The most famous is the fraternal kiss between Soviet leader Leonid Brezhnev and East German leader Erich Honecker, by Dmitri Vrubel, with the caption: My God, help me to survive this deadly love. Another is the Trabant car breaking through the Wall. The paintings were restored in 2009. Walk to the river side to see the former death strip. From the Oberbaum Bridge at the end, you can see how the river divided Friedrichshain in the East and Kreuzberg in the West."
+    },
+    {
+      "id": "traenenpalast",
+      "name": "Tränenpalast (Palace of Tears)",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Reichstagufer 17",
+      "lat": 52.5199,
+      "lng": 13.3866,
+      "wiki": "Tränenpalast",
+      "summary": "Border departure hall at Friedrichstraße station, where families said goodbye. Free museum.",
+      "script": "Friedrichstrasse station was a strange place in divided Berlin: it was in East Berlin, but trains from the West ran through it, and it served as a border crossing. This glass pavilion, built in 1962, was the departure hall for people leaving East Berlin for the West. Most of them were West Germans visiting relatives, or East German pensioners, who were allowed to travel. East Berliners could accompany their visitors only to this point. So many tearful goodbyes took place here that Berliners called it the Palace of Tears. Inside, a free museum shows the original passport control booths, narrow and claustrophobic, where border guards inspected papers and faces. There are also personal stories of separated families, and of people who tried to use false documents. It is one of the most moving places to understand how the division affected ordinary lives."
+    },
+    {
+      "id": "stasi-museum",
+      "name": "Stasi Museum",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Ruschestraße 103, Lichtenberg",
+      "lat": 52.5145,
+      "lng": 13.4876,
+      "wiki": "Stasi Museum",
+      "summary": "Headquarters of East Germany's secret police, including Erich Mielke's preserved office.",
+      "script": "This complex in Lichtenberg was the headquarters of the Ministry for State Security, better known as the Stasi, East Germany's secret police. At its peak, the Stasi had more than ninety thousand full-time employees and around one hundred and eighty thousand unofficial informers: neighbours, colleagues, friends and even family members reporting on each other. It opened letters, bugged apartments, and kept files on millions of people. In House 1, you can see the offices of Erich Mielke, minister from 1957 to 1989, preserved in their original 1960s style. The exhibition includes hidden cameras in buttons, watering cans and tree trunks. On the fifteenth of January 1990, citizens stormed this complex to stop the destruction of files. Thanks to them, millions of files survived, and since 1992 anyone can request to read their own. Many discovered who had spied on them."
+    },
+    {
+      "id": "hohenschoenhausen",
+      "name": "Hohenschönhausen Memorial",
+      "eras": [
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Genslerstraße 66",
+      "lat": 52.542,
+      "lng": 13.501,
+      "wiki": "Berlin-Hohenschönhausen Memorial",
+      "summary": "Former Stasi remand prison, often guided by former inmates. Booking recommended.",
+      "script": "This was the main remand prison of the Stasi, an area so secret that it did not appear on East Berlin maps. It began in 1945 as a Soviet special camp, where thousands of people were held in terrible conditions and many died. The Soviets then built an underground cellar prison, nicknamed the U-Boat, with windowless cells and physical torture. From 1951 the Stasi took over. Over time, its methods became more psychological: isolation, sleep deprivation, uncertainty, and endless interrogations designed to break prisoners without leaving marks. Prisoners included people who had tried to escape, applied to leave, or criticised the regime. Many tours here are led by former prisoners, who describe their own experiences in the cells where they were held. It is an intense and unforgettable visit. Guided tours are the only way to see much of the prison. Check the website and book ahead."
+    },
+    {
+      "id": "karl-marx-allee",
+      "name": "Karl-Marx-Allee",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Karl-Marx-Allee, Friedrichshain",
+      "lat": 52.5177,
+      "lng": 13.437,
+      "wiki": "Karl-Marx-Allee",
+      "summary": "Monumental socialist boulevard, built as Stalinallee, where the 1953 uprising began.",
+      "script": "This two kilometre boulevard was East Germany's showcase of socialism. Built in the 1950s and originally called Stalinallee, it was lined with grand apartment blocks in the Soviet wedding cake style, decorated with Meissen tiles. They were called palaces for the workers, with central heating, lifts and shops on the ground floor. But the construction workers building it started the uprising of June 1953. When the government raised work quotas without raising wages, they went on strike on the sixteenth of June. The next day, protests spread across the country, with demands for free elections, until Soviet tanks crushed them and dozens were killed. In 1961, after Stalin's death and fall from favour, the street was renamed Karl-Marx-Allee, and his statue was removed overnight. Walk from Strausberger Platz to Frankfurter Tor, and see the Café Moskau and Kino International cinema, examples of later, more modern East German design."
+    },
+    {
+      "id": "glienicke-bridge",
+      "name": "Glienicke Bridge",
+      "eras": [
+        "coldwar"
+      ],
+      "address": "Königstraße, between Berlin and Potsdam",
+      "lat": 52.4134,
+      "lng": 13.0904,
+      "wiki": "Glienicke Bridge",
+      "summary": "The 'Bridge of Spies', where East and West exchanged captured agents.",
+      "script": "The Glienicke Bridge connects Berlin with Potsdam over the Havel river. During the Cold War, the border ran across its middle, between West Berlin and East Germany. Ordinary people could not cross it; it was reserved for Allied military missions. Because it was so quiet and controlled, it became the place where the superpowers exchanged captured spies. The most famous exchange took place on the tenth of February 1962. The American U-2 pilot Francis Gary Powers, shot down over the Soviet Union, was traded for the Soviet spy Rudolf Abel, a story told in the film Bridge of Spies. In 1986, the Soviet dissident Natan Sharansky was released across this bridge. Look for the slightly different shades of green paint on each half of the bridge, a reminder of the two sides that maintained it. Combine your visit with Potsdam, including the Cecilienhof Palace, where the Allied leaders met in 1945 to decide the fate of Germany."
+    },
+    {
+      "id": "teufelsberg",
+      "name": "Teufelsberg",
+      "eras": [
+        "reich",
+        "wwii",
+        "coldwar"
+      ],
+      "address": "Teufelsseechaussee 10, Grunewald",
+      "lat": 52.4977,
+      "lng": 13.2412,
+      "wiki": "Teufelsberg",
+      "summary": "A hill made of war rubble over an unfinished Nazi college, crowned by a US listening station.",
+      "script": "Teufelsberg, the Devil's Mountain, is not a natural hill. Underneath lies an unfinished Nazi military college, part of Albert Speer's plans for the new capital Germania. It was too solid to demolish, so after the war it was buried under around twenty-six million cubic metres of rubble from bombed Berlin, carried here by trucks for over twenty years. At about 120 metres, it became one of the highest points in the city. During the Cold War, the Americans and British built a listening station on the top, with large white radar domes. From here they intercepted Soviet and East German communications deep behind the Iron Curtain. The station closed after reunification and was left to decay. Today it is covered in street art, and it offers spectacular views. Admission is charged, and you need to walk up through the forest from the S-Bahn station Grunewald or Heerstrasse.",
+      "photo_search": "Teufelsberg Abhörstation"
+    }
+  ]
+}

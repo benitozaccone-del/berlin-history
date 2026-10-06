@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Berlin History Walks</title>
+<meta name="theme-color" content="#1c1b19">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#f6f3ee;--card:#fff;--ink:#1c1b19;--mute:#6b665e;--line:#e3ddd3;--accent:#9b2c2c}
+@media (prefers-color-scheme:dark){:root{--bg:#141311;--card:#1f1d1a;--ink:#eee9e1;--mute:#9d978c;--line:#34312c;--accent:#e06c6c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,system-ui,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+header{position:sticky;top:0;z-index:500;background:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;border-bottom:1px solid var(--line)}
+h1{font-size:20px;margin:0 0 8px;letter-spacing:-.01em}
+.row{display:flex;gap:8px;align-items:center}
+.tabs{display:flex;background:var(--line);border-radius:10px;padding:3px;flex:1}
+.tabs button{flex:1;border:0;background:none;color:var(--ink);padding:7px;border-radius:8px;font:inherit;font-size:14px}
+.tabs button.on{background:var(--card);font-weight:600}
+.locate{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 10px;font:inherit;font-size:14px;white-space:nowrap}
+.locate.on{border-color:var(--accent);color:var(--accent)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;font:inherit;font-size:13px}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+main{padding:12px 16px calc(110px + env(safe-area-inset-bottom))}
+.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;cursor:pointer;width:100%;text-align:left;color:inherit;font:inherit}
+.card img{width:84px;height:84px;object-fit:cover;border-radius:10px;flex:none;background:var(--line)}
+.card h2{font-size:16px;margin:0 0 2px;line-height:1.25}
+.card p{margin:0;font-size:13px;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:11px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dist{color:var(--accent);font-weight:600}
+.done{opacity:.55}
+#map{position:fixed;left:0;right:0;bottom:0;z-index:1}
+.sheet{position:fixed;inset:0;z-index:900;background:var(--bg);overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
+.sheet.open{transform:none}
+.sheet .hero{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--line)}
+.close{position:fixed;top:calc(env(safe-area-inset-top) + 10px);right:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px}
+.body{padding:16px 16px calc(130px + env(safe-area-inset-bottom))}
+.body h2{margin:0 0 4px;font-size:24px;line-height:1.2}
+.addr{color:var(--mute);font-size:14px;margin-bottom:12px}
+.actions{display:flex;gap:8px;margin:12px 0 18px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;text-align:center;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px;font:inherit;font-size:15px;font-weight:600;text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.script{font-size:17px;line-height:1.65}
+.credit{font-size:11px;color:var(--mute);margin-top:20px;word-break:break-word}
+.credit a{color:inherit}
+.player{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:1000;background:var(--ink);color:var(--bg);border-radius:16px;padding:10px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.player.show{display:flex}
+.player button{border:0;background:var(--bg);color:var(--ink);width:44px;height:44px;border-radius:50%;font-size:18px;flex:none}
+.player .t{flex:1;min-width:0}
+.player .n{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player input{width:100%;accent-color:var(--accent)}
+.player .s{font-size:11px;opacity:.7}
+.empty{color:var(--mute);text-align:center;padding:40px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Berlin History Walks</h1>
+  <div class="row">
+    <div class="tabs"><button id="tList" class="on">List</button><button id="tMap">Map</button></div>
+    <button id="locate" class="locate">📍 Near me</button>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+<main id="list"></main>
+<div id="map" hidden></div>
+
+<section class="sheet" id="sheet" aria-hidden="true">
+  <button class="close" id="close" aria-label="Close">×</button>
+  <div id="detail"></div>
+</section>
+
+<div class="player" id="player">
+  <button id="pp" aria-label="Play/pause">▶</button>
+  <div class="t">
+    <div class="n" id="pn"></div>
+    <input type="range" id="seek" min="0" max="100" value="0" step="0.1">
+    <div class="s" id="ps"></div>
+  </div>
+  <button id="skip" aria-label="Back 15 seconds" style="font-size:13px">−15</button>
+</div>
+<audio id="audio" preload="none"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const store = {get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+let DATA, CREDITS = {}, era = 'all', pos = null, map, markers = {}, current = null, useSpeech = false;
+const visited = new Set(store.get('visited', []));
+
+const km = (a, b) => { const R=6371, r=x=>x*Math.PI/180, dLa=r(b.lat-a.lat), dLo=r(b.lng-a.lng);
+  return 2*R*Math.asin(Math.sqrt(Math.sin(dLa/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dLo/2)**2)); };
+const fmtD = d => d < 1 ? Math.round(d*1000/10)*10 + ' m' : d.toFixed(1) + ' km';
+const fmtT = s => isFinite(s) ? Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0') : '–';
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function init() {
+  DATA = await (await fetch('data/places.json')).json();
+  try { CREDITS = await (await fetch('data/credits.json')).json(); } catch {}
+  const chips = [['all','All', '#888'], ...Object.entries(DATA.eras).map(([k,v]) => [k, v.label, v.color])];
+  $('#chips').innerHTML = chips.map(([k,l,c]) => `<button class="chip${k==='all'?' on':''}" data-era="${k}">${k==='all'?'':`<span class="dot" style="background:${c}"></span> `}${l}</button>`).join('');
+  $('#chips').onclick = e => { const b = e.target.closest('.chip'); if (!b) return;
+    era = b.dataset.era; document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b)); render(); };
+  render();
+  const id = location.hash.slice(1); if (id) open(id);
+}
+
+function filtered() {
+  let ps = DATA.places.filter(p => era === 'all' || p.eras.includes(era));
+  if (pos) ps = ps.map(p => ({...p, d: km(pos, p)})).sort((a,b) => a.d - b.d);
+  return ps;
+}
+
+function render() {
+  const ps = filtered();
+  $('#list').innerHTML = ps.length ? ps.map(p => `
+    <button class="card${visited.has(p.id)?' done':''}" data-id="${p.id}">
+      <img src="img/${p.id}.jpg" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+      <div><h2>${visited.has(p.id)?'✓ ':''}${esc(p.name)}</h2><p>${esc(p.summary)}</p>
+      <div class="meta">${p.d!=null?`<span class="dist">${fmtD(p.d)}</span>`:''}${p.eras.map(e=>`<span class="dot" title="${DATA.eras[e].label}" style="background:${DATA.eras[e].color}"></span>`).join('')}</div></div>
+    </button>`).join('') : '<p class="empty">No places for this filter.</p>';
+  if (map) drawMarkers();
+}
+$('#list').onclick = e => { const c = e.target.closest('.card'); if (c) open(c.dataset.id); };
+
+// --- map ---
+function showMap(on) {
+  $('#tMap').classList.toggle('on', on); $('#tList').classList.toggle('on', !on);
+  $('#list').hidden = on; $('#map').hidden = !on;
+  if (on) {
+    $('#map').style.top = $('header').offsetHeight + 'px';
+    if (!map) { map = L.map('map', {zoomControl:false}).setView([52.515, 13.39], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map); drawMarkers(); }
+    setTimeout(() => map.invalidateSize(), 50);
+  }
+}
+let meMarker;
+function drawMarkers() {
+  Object.values(markers).forEach(m => m.remove()); markers = {};
+  filtered().forEach(p => {
+    const c = DATA.eras[p.eras[p.eras.length-1]].color;
+    markers[p.id] = L.circleMarker([p.lat,p.lng], {radius:9, color:'#fff', weight:2, fillColor:c, fillOpacity:visited.has(p.id)?.45:.95})
+      .addTo(map).bindTooltip(p.name).on('click', () => open(p.id));
+  });
+  if (pos) { meMarker?.remove(); meMarker = L.circleMarker([pos.lat,pos.lng], {radius:7, color:'#fff', weight:3, fillColor:'#1a73e8', fillOpacity:1}).addTo(map); }
+}
+$('#tList').onclick = () => showMap(false);
+$('#tMap').onclick = () => showMap(true);
+
+// --- geolocation ---
+let watch;
+$('#locate').onclick = () => {
+  if (watch != null) { navigator.geolocation.clearWatch(watch); watch = null; pos = null; $('#locate').classList.remove('on'); render(); return; }
+  if (!navigator.geolocation) return alert('Location not available');
+  $('#locate').textContent = '📍 Locating…';
+  watch = navigator.geolocation.watchPosition(g => {
+    const first = !pos; pos = {lat: g.coords.latitude, lng: g.coords.longitude};
+    $('#locate').textContent = '📍 Near me'; $('#locate').classList.add('on'); render();
+    if (first && map) map.setView([pos.lat,pos.lng], 14);
+  }, err => { $('#locate').textContent = '📍 Near me'; watch = null; alert('Could not get location: ' + err.message); },
+  {enableHighAccuracy:true, maximumAge:15000});
+};
+
+// --- detail sheet ---
+function open(id) {
+  const p = DATA.places.find(x => x.id === id); if (!p) return;
+  const cr = CREDITS[p.id];
+  const d = pos ? `<span class="dist">${fmtD(km(pos,p))} away</span> · ` : '';
+  $('#detail').innerHTML = `
+    <img class="hero" src="img/${p.id}.jpg" alt="${esc(p.name)}" onerror="this.style.display='none'">
+    <div class="body">
+      <h2>${esc(p.name)}</h2>
+      <div class="addr">${d}${esc(p.address)}</div>
+      <div class="meta">${p.eras.map(e=>`<span class="chip" style="font-size:12px;padding:3px 9px"><span class="dot" style="background:${DATA.eras[e].color}"></span> ${DATA.eras[e].label}</span>`).join('')}</div>
+      <div class="actions">
+        <button class="btn primary" id="play">▶ Play audioguide</button>
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${p.lat},${p.lng}">🧭 Directions</a>
+        <button class="btn" id="visit">${visited.has(p.id)?'✓ Visited':'Mark visited'}</button>
+      </div>
+      <div class="script">${p.script.split(/(?<=\.)\s+(?=[A-Z])/).reduce((a,s,i)=>{const k=Math.floor(i/4);(a[k]=a[k]||[]).push(s);return a},[]).map(g=>`<p>${esc(g.join(' '))}</p>`).join('')}</div>
+      ${cr?`<div class="credit">Photo: ${esc(cr.author)} · ${esc(cr.license||'')} · <a href="${cr.source}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`:''}
+    </div>`;
+  $('#play').onclick = () => play(p);
+  $('#visit').onclick = e => { visited.has(p.id) ? visited.delete(p.id) : visited.add(p.id); store.set('visited',[...visited]);
+    e.target.textContent = visited.has(p.id)?'✓ Visited':'Mark visited'; render(); };
+  $('#sheet').scrollTop = 0; $('#sheet').classList.add('open'); $('#sheet').setAttribute('aria-hidden','false');
+  history.replaceState(null, '', '#' + id);
+}
+function closeSheet(){ $('#sheet').classList.remove('open'); $('#sheet').setAttribute('aria-hidden','true'); history.replaceState(null,'',location.pathname); }
+$('#close').onclick = closeSheet;
+
+// --- audio player (MP3 if generated, otherwise device text-to-speech) ---
+const audio = $('#audio');
+function play(p) {
+  speechSynthesis?.cancel(); current = p; useSpeech = false;
+  $('#pn').textContent = p.name; $('#player').classList.add('show');
+  audio.src = `audio/${p.id}.mp3`;
+  audio.play().catch(() => {});
+  audio.onerror = () => speak(p);
+  if ('mediaSession' in navigator) navigator.mediaSession.metadata = new MediaMetadata({title:p.name, artist:'Berlin History Walks', artwork:[{src:`img/${p.id}.jpg`, sizes:'1000x750', type:'image/jpeg'}]});
+}
+function speak(p) {
+  if (!('speechSynthesis' in window)) { $('#ps').textContent = 'Audio not generated yet'; return; }
+  useSpeech = true; audio.removeAttribute('src');
+  const u = new SpeechSynthesisUtterance(p.name + '. ' + p.script);
+  u.lang = 'en-GB'; u.rate = .95;
+  u.onend = () => { $('#pp').textContent = '▶'; };
+  speechSynthesis.speak(u); $('#pp').textContent = '❚❚'; $('#ps').textContent = 'Device voice (MP3 not generated yet)';
+}
+$('#pp').onclick = () => {
+  if (useSpeech) { if (speechSynthesis.paused) { speechSynthesis.resume(); $('#pp').textContent='❚❚'; } else if (speechSynthesis.speaking) { speechSynthesis.pause(); $('#pp').textContent='▶'; } else if (current) speak(current); return; }
+  audio.paused ? audio.play() : audio.pause();
+};
+$('#skip').onclick = () => { if (!useSpeech) audio.currentTime = Math.max(0, audio.currentTime - 15); };
+audio.onplay = () => $('#pp').textContent = '❚❚';
+audio.onpause = () => $('#pp').textContent = '▶';
+audio.ontimeupdate = () => { $('#seek').value = audio.duration ? audio.currentTime / audio.duration * 100 : 0; $('#ps').textContent = fmtT(audio.currentTime) + ' / ' + fmtT(audio.duration); };
+$('#seek').oninput = e => { if (audio.duration) audio.currentTime = e.target.value / 100 * audio.duration; };
+
+if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+init();
+</script>
+</body>
+</html>

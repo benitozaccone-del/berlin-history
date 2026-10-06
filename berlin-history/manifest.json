@@ -1,0 +1,9 @@
+{
+  "name": "Berlin History Walks",
+  "short_name": "Berlin History",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1c1b19",
+  "theme_color": "#1c1b19",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
