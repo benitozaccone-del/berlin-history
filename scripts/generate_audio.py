@@ -77,13 +77,23 @@ def main():
         sys.exit(f"{need} not set (add it to .env or export it)")
     tts = azure if a.provider == "azure" else speechify
     if a.story:
-        for c in json.loads((ROOT / "data" / "story.json").read_text())["chapters"]:
-            f = OUT / f"{c['id']}.mp3"
-            if (a.only and c["id"] != a.only) or (f.exists() and not a.force):
-                continue
-            text = f"{c['title']}. {c['years'].replace('–', ' to ')}.\n\n{c['text']}"
-            f.write_bytes(tts(text, a.voice or c["voice"]))
-            print(f"done  {f.name}  ({len(text)} chars)")
+        story_file = ROOT / "data" / "story.json"
+        story = json.loads(story_file.read_text())
+        for series in story["series"]:
+            for c in series["chapters"]:
+                f = OUT / f"{c['id']}.mp3"
+                if (a.only and c["id"] != a.only) or (f.exists() and not a.force):
+                    continue
+                text = f"{c['title']}. {c['years'].replace('–', ' to ')}.\n\n{c['text']}"
+                f.write_bytes(tts(text, a.voice or story["voice"]))
+                print(f"done  {f.name}  ({len(text)} chars)")
+        # record durations for the app (96 kbit/s CBR mp3)
+        for series in story["series"]:
+            for c in series["chapters"]:
+                f = OUT / f"{c['id']}.mp3"
+                if f.exists():
+                    c["seconds"] = round(f.stat().st_size * 8 / 96000)
+        story_file.write_text(json.dumps(story, indent=2, ensure_ascii=False))
         return
     places = json.loads(DATA.read_text())["places"]
     genders = (["male", "female"] * len(places))[:len(places)]

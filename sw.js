@@ -1,6 +1,6 @@
 // Offline cache: app shell up front, photos/audio/map tiles cached as they are used.
 // "Download all for offline" = open the app once on Wi-Fi; the shell precaches every place's photo and audio.
-const CACHE = 'berlin-v8';
+const CACHE = 'berlin-v9';
 
 self.addEventListener('install', e => e.waitUntil((async () => {
   const c = await caches.open(CACHE);
@@ -9,7 +9,7 @@ self.addEventListener('install', e => e.waitUntil((async () => {
     .map(u => new Request(u, { cache: 'reload' })));
   const { places } = await (await fetch('data/places.json')).json();
   // best effort: missing MP3s (not yet generated) are simply skipped
-  await Promise.allSettled([...places.flatMap(p => [c.add(`img/${p.id}.jpg`), c.add(`audio/${p.id}.mp3`)]), ...[1,2,3,4,5].map(i => c.add(`audio/chapter-${i}.mp3`))]);
+  await Promise.allSettled([...places.flatMap(p => [c.add(`img/${p.id}.jpg`), c.add(`audio/${p.id}.mp3`)]), ...(await (await fetch('data/story.json')).json()).series.flatMap(s => s.chapters.map(ch => c.add(`audio/${ch.id}.mp3`)))]);
   self.skipWaiting();
 })()));
 

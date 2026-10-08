@@ -100,6 +100,29 @@ main{padding:0 0 calc(110px + env(safe-area-inset-bottom))}
 .lnk{border:0;background:none;color:var(--ink);font:700 14px "Libre Franklin",sans-serif;text-decoration:underline;text-underline-offset:3px;padding:0}
 #homeStory{padding-top:0;padding-bottom:0}
 #story{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.series-card{margin:0 0 26px}
+.series-card .hero{cursor:pointer}
+.series-card .hero img{aspect-ratio:16/9}
+.series-meta{font-size:13px;color:var(--mute);margin:8px 0}
+.series-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.series-btns .btn{min-width:0}
+.series-btns svg,.lnk svg{vertical-align:-3px;margin-right:4px}
+.series-btns.pad{padding:0 16px 4px}
+.series{margin-bottom:30px}
+.series+.series{border-top:8px solid var(--band);padding-top:0}
+.h{font:500 20px Jost,sans-serif;margin:26px 0 10px}
+.mini{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+.mini::-webkit-scrollbar{display:none}
+.minicard{flex:none;width:150px;border:0;background:none;padding:0;text-align:left;color:inherit;font:600 13px "Libre Franklin",sans-serif;cursor:pointer}
+.minicard img{width:150px;height:100px;object-fit:cover;display:block;margin-bottom:5px;background:var(--band)}
+.script p.now{background:color-mix(in srgb, var(--accent) 10%, transparent);box-shadow:-8px 0 0 color-mix(in srgb, var(--accent) 10%, transparent),-11px 0 0 var(--accent)}
+.pager{margin-top:26px;border-top:1px solid var(--line)}
+.list.flush{padding:0}
+.crumb a{color:inherit}
+.tr-ch{margin:30px 0 12px}
+.tr-ch:first-child{margin-top:0}
+.tr-ch .no{font:500 12px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.tr-ch h2{margin:2px 0 6px;font-size:24px;font-weight:500}
 .story-actions{padding:0 16px 8px}
 /* larger screens: centred 720px column; header, band and player keep full-width backgrounds */
 :root{--gut:max(16px, calc((100vw - 720px) / 2))}
@@ -122,7 +145,7 @@ header,.band{padding-left:var(--gut);padding-right:var(--gut)}
 <main id="main">
   <div class="hero"><img src="img/brandenburg-gate.jpg" alt=""><div class="labels"><h1>Berlin 1914–1989</h1><p>A walking audioguide</p></div></div>
   <p class="intro">From the Kaiser's war to the fall of the Wall: <a href="#" id="introMap">32 places</a> where the twentieth century happened, each with a <strong>two-minute audio story</strong>.</p>
-  <div class="sec"><h2>The story before you go</h2><button class="lnk" id="toStory">All chapters →</button></div>
+  <div class="sec"><h2>The story before you go</h2><button class="lnk" id="toStory">All stories →</button></div>
   <div class="list" id="homeStory"></div>
   <div class="sec"><h2>Places</h2></div>
   <div class="list" id="list"></div>
@@ -222,46 +245,93 @@ $('#tMap').onclick = () => showView('map');
 $('#tStory').onclick = () => showView('story');
 $('#introMap').onclick = e => { e.preventDefault(); showView('map'); };
 
-// --- story: chapters played in sequence ---
+// --- story: series of narrated chapters, played in sequence, linked to places ---
 let STORY;
-const chapterItem = (c, i) => ({ id: c.id, name: `${i+1}. ${c.title}`, img: c.image, text: c.text, next: i + 1 });
-const chapterRows = () => STORY.chapters.map((c,i) => `
-      <button class="chap${current?.id===c.id?' playing':''}" data-i="${i}">
+const loadStory = async () => STORY = STORY || await (await fetch('data/story.json')).json();
+const mins = cs => Math.round(cs.reduce((t,c) => t + (c.seconds||0), 0) / 60);
+const chapterItem = (s, i) => { const se = STORY.series[s], c = se.chapters[i];
+  return { id: c.id, name: `${se.title} · ${i+1}. ${c.title}`, img: c.image, text: c.text, series: s, idx: i }; };
+const chaptersFor = placeId => STORY ? STORY.series.flatMap((se,s) => se.chapters.map((c,i) => ({se,s,c,i}))).filter(x => x.c.places?.includes(placeId)) : [];
+const chapterRow = (s, i, label) => { const c = STORY.series[s].chapters[i]; return `
+      <button class="chap${current?.id===c.id?' playing':''}" data-s="${s}" data-i="${i}">
         <img src="img/${c.image}.jpg" alt="" loading="lazy">
-        <div><div class="no">Chapter ${i+1}</div><h3>${esc(c.title)}</h3><div class="y">${c.years}</div></div>
-        <span class="pl" data-play="${i}">${PLAY}</span>
-      </button>`).join('');
+        <div><div class="no">${label || 'Chapter ' + (i+1)}</div><h3>${esc(c.title)}</h3><div class="y">${c.years}${c.seconds?' · '+Math.round(c.seconds/60)+' min':''}</div></div>
+        <span class="pl" data-play="${s}:${i}">${PLAY}</span>
+      </button>`; };
+
 async function renderHomeStory() {
-  STORY = STORY || await (await fetch('data/story.json')).json();
-  $('#homeStory').innerHTML = chapterRows();
+  await loadStory();
+  $('#homeStory').innerHTML = STORY.series.map((se,s) => `
+    <div class="series-card">
+      <div class="hero" data-series="${s}"><img src="img/${se.chapters[0].image}.jpg" alt="" loading="lazy">
+        <div class="labels"><h2>${esc(se.title)}</h2><p>${esc(se.subtitle)}</p></div></div>
+      <div class="series-meta">${se.chapters.length} chapters · ${mins(se.chapters)} min</div>
+      <div class="series-btns"><button class="btn primary" data-play="${s}:0">${PLAY} Listen</button><button class="btn" data-series="${s}">Chapters & transcript</button></div>
+    </div>`).join('');
 }
 async function renderStory() {
-  STORY = STORY || await (await fetch('data/story.json')).json();
-  const ch = STORY.chapters;
-  $('#story').innerHTML = `
-    <div class="hero"><img src="img/${ch[0].image}.jpg" alt=""><div class="labels"><h1>${esc(STORY.title)}</h1><p>${esc(STORY.subtitle)}</p></div></div>
-    <p class="intro">Listen before you travel: <strong>${ch.length} chapters, about 25 minutes</strong>, from the Kaiser's empire to the fall of the Wall. They play one after another.</p>
-    <div class="story-actions"><button class="btn primary" id="playAll" style="width:100%">${PLAY} Play the whole story</button></div>
-    <div class="list">${chapterRows()}</div>`;
-  $('#playAll').onclick = () => play(chapterItem(ch[0], 0));
+  await loadStory();
+  $('#story').innerHTML = STORY.series.map((se,s) => `
+    <section class="series" id="series-${s}">
+      <div class="hero"><img src="img/${se.chapters[0].image}.jpg" alt=""><div class="labels">${s?'<h2>':'<h1>'}${esc(se.title)}${s?'</h2>':'</h1>'}<p>${esc(se.subtitle)}</p></div></div>
+      <p class="intro">${esc(se.intro)} <strong>${se.chapters.length} chapters, ${mins(se.chapters)} minutes.</strong></p>
+      <div class="series-btns pad"><button class="btn primary" data-play="${s}:0">${PLAY} Play all</button><button class="btn" data-transcript="${s}">Read transcript</button></div>
+      <div class="list">${se.chapters.map((c,i) => chapterRow(s,i)).join('')}</div>
+    </section>`).join('');
 }
+function showSeries(s) { showView('story'); setTimeout(() => $('#series-'+s)?.scrollIntoView(), 80); }
 $('#toStory').onclick = () => showView('story');
-$('#story').onclick = $('#homeStory').onclick = e => {
-  const pl = e.target.closest('[data-play]'), c = e.target.closest('.chap');
-  if (pl) return play(chapterItem(STORY.chapters[pl.dataset.play], +pl.dataset.play));
-  if (c) openChapter(+c.dataset.i);
-};
-function openChapter(i) {
-  const c = STORY.chapters[i];
+// one click handler for every story/chapter element, wherever it appears (home, story tab, sheets)
+document.addEventListener('click', e => {
+  const pl = e.target.closest('[data-play]'), tr = e.target.closest('[data-transcript]'),
+        se = e.target.closest('[data-series]'), ch = e.target.closest('.chap'), pc = e.target.closest('[data-place]');
+  if (!STORY || !(pl || tr || se || ch || pc)) return;
+  e.preventDefault();
+  if (pl) { const [s,i] = pl.dataset.play.split(':').map(Number); return play(chapterItem(s,i)); }
+  if (tr) return openTranscript(+tr.dataset.transcript);
+  if (se) { closeSheet(); return showSeries(+se.dataset.series); }
+  if (pc) return open(pc.dataset.place);
+  if (ch) openChapter(+ch.dataset.s, +ch.dataset.i);
+});
+const showSheet = () => { $('#sheet').scrollTop = 0; $('#sheet').classList.add('open'); $('#sheet').setAttribute('aria-hidden','false'); };
+const paras = (text, id) => text.split('\n\n').map((p,k) => `<p data-c="${id}" data-k="${k}">${esc(p)}</p>`).join('');
+
+function openChapter(s, i) {
+  const se = STORY.series[s], c = se.chapters[i], prev = se.chapters[i-1], next = se.chapters[i+1];
+  const places = (c.places||[]).map(id => DATA.places.find(p => p.id === id)).filter(Boolean);
   $('#detail').innerHTML = `
     <div class="hero"><img src="img/${c.image}.jpg" alt=""><div class="labels"><h2>${esc(c.title)}</h2><p>Chapter ${i+1} · ${c.years}</p></div></div>
-    <div class="crumb">Berlin History › Story › Chapter ${i+1}</div>
+    <div class="crumb">Story › <a href="#" data-series="${s}">${esc(se.title)}</a> › Chapter ${i+1}</div>
     <div class="body">
-      <div class="actions"><button class="btn primary" id="play">${PLAY} Play chapter</button></div>
-      <div class="script">${c.text.split('\n\n').map(p => `<p>${esc(p)}</p>`).join('')}</div>
+      <div class="actions"><button class="btn primary" data-play="${s}:${i}">${PLAY} Play chapter${c.seconds?' · '+Math.round(c.seconds/60)+' min':''}</button></div>
+      ${places.length?`<h3 class="h">Visit the places</h3><div class="mini">${places.map(p => `<button class="minicard" data-place="${p.id}"><img src="img/${p.id}.jpg" alt="" loading="lazy"><span>${esc(p.name)}</span></button>`).join('')}</div>`:''}
+      <h3 class="h">Transcript</h3>
+      <div class="script">${paras(c.text, c.id)}</div>
+      <div class="pager">${prev?chapterRow(s,i-1,'← Previous'):''}${next?chapterRow(s,i+1,'Next →'):''}</div>
     </div>`;
-  $('#play').onclick = () => play(chapterItem(c, i));
-  $('#sheet').scrollTop = 0; $('#sheet').classList.add('open'); $('#sheet').setAttribute('aria-hidden','false');
+  showSheet(); markParagraph();
+}
+function openTranscript(s) {
+  const se = STORY.series[s];
+  $('#detail').innerHTML = `
+    <div class="hero"><img src="img/${se.chapters[0].image}.jpg" alt=""><div class="labels"><h2>${esc(se.title)}</h2><p>Full transcript</p></div></div>
+    <div class="crumb">Story › <a href="#" data-series="${s}">${esc(se.title)}</a> › Transcript</div>
+    <div class="body">${se.chapters.map((c,i) => `
+      <div class="tr-ch"><div class="no">Chapter ${i+1} · ${c.years}</div><h2>${esc(c.title)}</h2>
+        <button class="lnk" data-play="${s}:${i}">${PLAY} Listen to this chapter</button></div>
+      <div class="script">${paras(c.text, c.id)}</div>`).join('')}
+    </div>`;
+  showSheet(); markParagraph();
+}
+// follow-along: highlight the paragraph being read (estimated from position in the audio)
+let lastMark = '';
+function markParagraph() {
+  if (!current?.text || !audio.duration) return;
+  const ps = current.text.split('\n\n'), total = ps.reduce((t,p) => t + p.length, 0), at = audio.currentTime / audio.duration * total;
+  let k = 0, acc = 0; while (k < ps.length - 1 && acc + ps[k].length < at) acc += ps[k++].length;
+  const key = current.id + ':' + k; if (key === lastMark && document.querySelector('.script p.now')) return; lastMark = key;
+  document.querySelectorAll('.script p.now').forEach(p => p.classList.remove('now'));
+  document.querySelector(`.script p[data-c="${current.id}"][data-k="${k}"]`)?.classList.add('now');
 }
 
 // --- geolocation ---
@@ -283,7 +353,7 @@ function open(id) {
   const p = DATA.places.find(x => x.id === id); if (!p) return;
   const cr = CREDITS[p.id];
   const d = pos ? `<span class="dist">${fmtD(km(pos,p))} away</span> · ` : '';
-  const paras = p.script.split(/(?<=\.)\s+(?=[A-Z])/).reduce((a,s,i)=>{const k=Math.floor(i/4);(a[k]=a[k]||[]).push(s);return a},[]).map(g=>`<p>${esc(g.join(' '))}</p>`).join('');
+  const pparas = p.script.split(/(?<=\.)\s+(?=[A-Z])/).reduce((a,s,i)=>{const k=Math.floor(i/4);(a[k]=a[k]||[]).push(s);return a},[]).map(g=>`<p>${esc(g.join(' '))}</p>`).join('');
   $('#detail').innerHTML = `
     <div class="hero"><img src="img/${p.id}.jpg" alt="${esc(p.name)}" onerror="this.style.visibility='hidden'">
       <div class="labels"><h2>${esc(p.name)}</h2><p>${p.eras.map(e=>DATA.eras[e].label).join(' · ')}</p></div>
@@ -298,7 +368,8 @@ function open(id) {
         <button class="btn" id="visit">${visited.has(p.id)?'✓ Visited':'Mark visited'}</button>
       </div>
       <p class="lead">${esc(p.summary)}</p>
-      <div class="script">${paras}</div>
+      <div class="script">${pparas}</div>
+      ${chaptersFor(p.id).length?`<h3 class="h">In the story</h3><div class="list flush">${chaptersFor(p.id).map(x => chapterRow(x.s, x.i, x.se.title + ' · ' + (x.i+1))).join('')}</div>`:''}
       ${cr?`<div class="credit">Photo: ${esc(cr.author)} · ${esc(cr.license||'')} · <a href="${cr.source}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`:''}
     </div>`;
   $('#play').onclick = () => play(p);
@@ -317,6 +388,7 @@ function play(p) {
   $('#pn').textContent = p.name; $('#player').classList.add('show');
   audio.src = `audio/${p.id}.mp3`;
   if (STORY) { renderHomeStory(); if (!$('#story').hidden) renderStory(); }
+  lastMark = '';
   audio.play().catch(() => {});
   audio.onerror = () => speak(p);
   if ('mediaSession' in navigator) navigator.mediaSession.metadata = new MediaMetadata({title:p.name, artist:'Berlin History Walks', artwork:[{src:`img/${p.img || p.id}.jpg`, sizes:'1000x750', type:'image/jpeg'}]});
@@ -335,16 +407,16 @@ $('#pp').onclick = () => {
 };
 $('#skip').onclick = () => { if (!useSpeech) audio.currentTime = Math.max(0, audio.currentTime - 15); };
 audio.onplay = () => setPP(true);
-audio.onended = () => { const n = current?.next; if (n != null && STORY?.chapters[n]) play(chapterItem(STORY.chapters[n], n)); else setPP(false); };
+audio.onended = () => { const c = current; if (c?.series != null && STORY.series[c.series].chapters[c.idx+1]) play(chapterItem(c.series, c.idx+1)); else setPP(false); };
 audio.onpause = () => setPP(false);
-audio.ontimeupdate = () => { $('#seek').value = audio.duration ? audio.currentTime / audio.duration * 100 : 0; $('#ps').textContent = fmtT(audio.currentTime) + ' / ' + fmtT(audio.duration); };
+audio.ontimeupdate = () => { markParagraph(); $('#seek').value = audio.duration ? audio.currentTime / audio.duration * 100 : 0; $('#ps').textContent = fmtT(audio.currentTime) + ' / ' + fmtT(audio.duration); };
 $('#seek').oninput = e => { if (audio.duration) audio.currentTime = e.target.value / 100 * audio.duration; };
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
 const setHH = () => document.documentElement.style.setProperty('--hh', $('header').offsetHeight + 'px');
 addEventListener('resize', setHH); setHH();
 setPP(false);
-init(); renderHomeStory();
+init().then(renderHomeStory);
 </script>
 </body>
 </html>
